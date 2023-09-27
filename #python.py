@@ -9,12 +9,26 @@ WIDTH, HEIGHT = 800, 600
 CELL_SIZE = 20
 GRID_WIDTH = WIDTH // CELL_SIZE
 GRID_HEIGHT = HEIGHT // CELL_SIZE
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
 PLAYER_SIZE = 20
 TRAIL_LENGTH = 10
 PLAYER1_COLOR = (255, 0, 0)  # Red for Player 1
 PLAYER2_COLOR = (0, 0, 255)  # Blue for Player 2
+
+# Color palette
+COLORS = [
+    (44, 44, 84),   # dark indigo
+    (71, 71, 135),  # deep purple-gray
+    (170, 171, 184),  # cool gray
+    (236, 236, 236),  # light gray
+    (40, 54, 24),  # dark green-gray
+    (183, 183, 164),  # light gray-green
+    (212, 212, 212),  # soft gray
+    (240, 239, 235),  # off-white
+    (228, 228, 222),  # ethereal ivory
+    (196, 197, 186),  # sophisticated sage
+    (27, 27, 27),   # timeless noir
+    (89, 95, 57)    # muted moss
+]
 
 # Create the screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -38,6 +52,10 @@ def generate_maze():
     return grid
 
 maze = generate_maze()
+
+# Randomly select colors for the maze walls and background
+background_color = random.choice(COLORS)
+wall_color = random.choice(COLORS)
 
 # Player positions and trail history
 player1_x, player1_y = 50, HEIGHT // 2
@@ -89,13 +107,12 @@ while running:
         print("Player 2 wins!")
         running = False
 
-    # Draw the maze
-    screen.fill(WHITE)
+    # Draw the maze with random colors
+    screen.fill(background_color)
     for y in range(GRID_HEIGHT):
         for x in range(GRID_WIDTH):
             if maze[y][x]:
-                pygame.draw.rect(screen, GREEN, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-    pygame.draw.circle(screen, (0, 0, 255), (WIDTH // 2, HEIGHT // 2), 10)  # Center point
+                pygame.draw.rect(screen, wall_color, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
 
     # Draw the player trails
     for pos in player1_trail:
