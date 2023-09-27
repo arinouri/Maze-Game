@@ -33,10 +33,19 @@ while running:
         player1_y -= 5
     if keys[pygame.K_s]:
         player1_y += 5
+    if keys[pygame.K_a]:
+        player1_x -= 5
+    if keys[pygame.K_d]:
+        player1_x += 5
     if keys[pygame.K_UP]:
         player2_y -= 5
     if keys[pygame.K_DOWN]:
         player2_y += 5
+    if keys[pygame.K_LEFT]:
+        player2_x -= 5
+    if keys[pygame.K_RIGHT]:
+        player2_x += 5
+
 
     # Check if players have reached the center
     if abs(player1_x - WIDTH // 2) < PLAYER_SIZE and abs(player1_y - HEIGHT // 2) < PLAYER_SIZE:
