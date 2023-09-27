@@ -57,9 +57,17 @@ maze = generate_maze()
 background_color = random.choice(COLORS)
 wall_color = random.choice(COLORS)
 
+# Randomly select a starting position for both players
+player_start_x = random.randint(1, GRID_WIDTH - 2) * CELL_SIZE
+player_start_y = random.randint(1, GRID_HEIGHT - 2) * CELL_SIZE
+
+# Randomly select a position for the center point
+center_x = random.randint(1, GRID_WIDTH - 2) * CELL_SIZE
+center_y = random.randint(1, GRID_HEIGHT - 2) * CELL_SIZE
+
 # Player positions and trail history
-player1_x, player1_y = 50, HEIGHT // 2
-player2_x, player2_y = WIDTH - 50, HEIGHT // 2
+player1_x, player1_y = player_start_x, player_start_y
+player2_x, player2_y = player_start_x, player_start_y
 player1_trail = []
 player2_trail = []
 
@@ -100,10 +108,10 @@ while running:
         player2_trail.pop(0)
 
     # Check if players have reached the center
-    if abs(player1_x - WIDTH // 2) < PLAYER_SIZE and abs(player1_y - HEIGHT // 2) < PLAYER_SIZE:
+    if abs(player1_x - center_x) < PLAYER_SIZE and abs(player1_y - center_y) < PLAYER_SIZE:
         print("Player 1 wins!")
         running = False
-    elif abs(player2_x - WIDTH // 2) < PLAYER_SIZE and abs(player2_y - HEIGHT // 2) < PLAYER_SIZE:
+    elif abs(player2_x - center_x) < PLAYER_SIZE and abs(player2_y - center_y) < PLAYER_SIZE:
         print("Player 2 wins!")
         running = False
 
