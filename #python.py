@@ -6,13 +6,14 @@ pygame.init()
 
 # Constants
 WIDTH, HEIGHT = 800, 600
-CELL_SIZE = 20
+CELL_SIZE = 30  # Increased cell size for player movement
 GRID_WIDTH = WIDTH // CELL_SIZE
 GRID_HEIGHT = HEIGHT // CELL_SIZE
 PLAYER_SIZE = 20
 TRAIL_LENGTH = 10
 PLAYER1_COLOR = (255, 0, 0)  # Red for Player 1
 PLAYER2_COLOR = (0, 0, 255)  # Blue for Player 2
+CENTER_COLOR = (255, 215, 0)  # Gold color for the center point
 
 # Color palette
 COLORS = [
@@ -61,9 +62,11 @@ wall_color = random.choice(COLORS)
 player_start_x = random.randint(1, GRID_WIDTH - 2) * CELL_SIZE
 player_start_y = random.randint(1, GRID_HEIGHT - 2) * CELL_SIZE
 
-# Randomly select a position for the center point
-center_x = random.randint(1, GRID_WIDTH - 2) * CELL_SIZE
-center_y = random.randint(1, GRID_HEIGHT - 2) * CELL_SIZE
+# Find a valid position for the center point (not inside a wall and not where the players start)
+center_x, center_y = player_start_x, player_start_y
+while maze[center_y // CELL_SIZE][center_x // CELL_SIZE] or (center_x == player_start_x and center_y == player_start_y):
+    center_x = random.randint(1, GRID_WIDTH - 2) * CELL_SIZE
+    center_y = random.randint(1, GRID_HEIGHT - 2) * CELL_SIZE
 
 # Player positions and trail history
 player1_x, player1_y = player_start_x, player_start_y
@@ -121,6 +124,9 @@ while running:
         for x in range(GRID_WIDTH):
             if maze[y][x]:
                 pygame.draw.rect(screen, wall_color, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+
+    # Draw the center point
+    pygame.draw.circle(screen, CENTER_COLOR, (center_x + CELL_SIZE // 2, center_y + CELL_SIZE // 2), CELL_SIZE // 4)
 
     # Draw the player trails
     for pos in player1_trail:
